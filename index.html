@@ -1,0 +1,489 @@
+<html><head><base href=".">
+    <title>iSchool Projects Platform</title>
+    <link rel="icon" href="ischooltech_logo.jfif">
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+    }
+    
+    .container {
+        width: 100%;
+        min-height: 100vh;
+        padding: 20px;
+    }
+    
+    .auth-container {
+        max-width: 400px;
+        margin: 50px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transform: translateY(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .auth-container:hover {
+        transform: translateY(-5px);
+    }
+    
+    .auth-container h2 {
+        color: #2c3e50;
+        margin-bottom: 30px;
+        text-align: center;
+        font-size: 28px;
+    }
+    
+    .dashboard {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .btn-primary {
+        background: #4776E6;
+        color: white;
+        background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+    }
+    
+    .btn-secondary {
+        background: #f8f9fa;
+        color: #2c3e50;
+        border: 1px solid #dee2e6;
+    }
+    
+    .input-group {
+        margin: 20px 0;
+    }
+    
+    input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+    
+    input:focus {
+        border-color: #4776E6;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(71, 118, 230, 0.1);
+    }
+    
+    .file-card {
+        background: #f8f9fa;
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+    }
+    
+    .file-card:hover {
+        transform: translateX(5px);
+        background: #fff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .student-list {
+        list-style: none;
+        margin-top: 20px;
+    }
+    
+    .student-item {
+        padding: 20px;
+        border-radius: 15px;
+        cursor: pointer;
+        margin-bottom: 15px;
+        background: #f8f9fa;
+        transition: all 0.3s ease;
+        border: 1px solid #e9ecef;
+    }
+    
+    .student-item:hover {
+        transform: translateX(5px);
+        background: #fff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    
+    .student-item h3 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+    
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #f1f3f4;
+    }
+    
+    .header h2 {
+        color: #2c3e50;
+        font-size: 24px;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    
+    /* Added animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .dashboard, .auth-container {
+        animation: fadeIn 0.5s ease-out;
+    }
+    
+    .files-list {
+        display: grid;
+        gap: 15px;
+        margin-top: 20px;
+    }
+    
+    /* Enhanced responsive design */
+    @media (max-width: 768px) {
+        .auth-container {
+            margin: 20px;
+            padding: 20px;
+        }
+        
+        .dashboard {
+            margin: 20px;
+            padding: 20px;
+        }
+        
+        .btn {
+            width: 100%;
+            margin: 5px 0;
+        }
+    }
+    </style>
+    </head>
+    <body>
+    <div id="app" class="container">
+        <div id="authSection" class="auth-container">
+            <h2>iSchool Projects Platform</h2>
+            <div id="initialButtons">
+                <button class="btn btn-primary" onclick="showLogin()">Sign In</button>
+                <button class="btn btn-secondary" onclick="showRegisterChoice()">Register</button>
+            </div>
+            <div id="loginForm" class="hidden">
+                <div class="input-group">
+                    <input type="text" id="loginUsername" placeholder="Username">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="loginPassword" placeholder="Password">
+                </div>
+                <button class="btn btn-primary" onclick="login()">Sign In</button>
+                <button class="btn btn-secondary" onclick="showInitial()">Back</button>
+            </div>
+            <div id="registerChoice" class="hidden">
+                <button class="btn btn-primary" onclick="showTeacherRegister()">Teacher Account</button>
+                <button class="btn btn-secondary" onclick="showStudentRegister()">Student Account</button>
+                <button class="btn btn-secondary" onclick="showInitial()">Back</button>
+            </div>
+            <div id="registerForm" class="hidden">
+                <div class="input-group">
+                    <input type="text" id="regName" placeholder="Full Name">
+                </div>
+                <div class="input-group">
+                    <input type="text" id="regUsername" placeholder="Username">
+                </div>
+                <div class="input-group">
+                    <input type="password" id="regPassword" placeholder="Password">
+                </div>
+                <button class="btn btn-primary" onclick="register()">Register</button>
+                <button class="btn btn-secondary" onclick="showRegisterChoice()">Back</button>
+            </div>
+        </div>
+    
+        <div id="dashboard" class="dashboard hidden">
+            <div class="header">
+                <h2 id="userWelcome"></h2>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+            <div id="studentDashboard" class="hidden">
+                <button class="btn btn-primary" onclick="showAddProject()">Add Project</button>
+                <button class="btn btn-primary" onclick="showAddHomework()">Add Homework</button>
+                <div id="filesList"></div>
+            </div>
+            <div id="teacherDashboard" class="hidden">
+                <button class="btn btn-primary" onclick="showStudentsList()">List of Students</button>
+                <div id="studentsList" class="student-list"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    // Replace the users initialization with an empty structure
+    let users = {
+        teachers: [],
+        students: []
+    };
+    
+    // Modify initializeApp function to clear any existing data
+    function initializeApp() {
+        // Clear any existing data
+        localStorage.clear();
+        // Set fresh empty structure
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+    
+    let currentUser = null;
+    
+    // Initialize the app
+    initializeApp();
+    
+    function showLogin() {
+        document.getElementById('initialButtons').classList.add('hidden');
+        document.getElementById('loginForm').classList.remove('hidden');
+    }
+    
+    function showRegisterChoice() {
+        document.getElementById('initialButtons').classList.add('hidden');
+        document.getElementById('registerChoice').classList.remove('hidden');
+    }
+    
+    function showTeacherRegister() {
+        if (users.teachers.length >= 3) {
+            alert('Maximum number of teacher accounts (3) reached!');
+            return;
+        }
+        document.getElementById('registerChoice').classList.add('hidden');
+        document.getElementById('registerForm').classList.remove('hidden');
+        currentUser = { type: 'teacher' };
+    }
+    
+    function showStudentRegister() {
+        document.getElementById('registerChoice').classList.add('hidden');
+        document.getElementById('registerForm').classList.remove('hidden');
+        currentUser = { type: 'student' };
+    }
+    
+    function showInitial() {
+        document.getElementById('loginForm').classList.add('hidden');
+        document.getElementById('registerChoice').classList.add('hidden');
+        document.getElementById('registerForm').classList.add('hidden');
+        document.getElementById('initialButtons').classList.remove('hidden');
+    }
+    
+    function register() {
+        const name = document.getElementById('regName').value;
+        const username = document.getElementById('regUsername').value;
+        const password = document.getElementById('regPassword').value;
+    
+        if (!name || !username || !password) {
+            alert('Please fill all fields');
+            return;
+        }
+    
+        const newUser = {
+            name,
+            username,
+            password,
+            files: []
+        };
+    
+        if (currentUser.type === 'teacher') {
+            users.teachers.push(newUser);
+        } else {
+            users.students.push(newUser);
+        }
+    
+        localStorage.setItem('users', JSON.stringify(users));
+        alert('Registration successful!');
+        showInitial();
+    }
+    
+    function login() {
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+    
+        let user = users.teachers.find(t => t.username === username && t.password === password);
+        let isTeacher = true;
+    
+        if (!user) {
+            user = users.students.find(s => s.username === username && s.password === password);
+            isTeacher = false;
+        }
+    
+        if (user) {
+            currentUser = { ...user, type: isTeacher ? 'teacher' : 'student' };
+            showDashboard();
+        } else {
+            alert('Invalid credentials!');
+        }
+    }
+    
+    function showDashboard() {
+        document.getElementById('authSection').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        document.getElementById('userWelcome').textContent = `Welcome, ${currentUser.name}`;
+    
+        if (currentUser.type === 'teacher') {
+            document.getElementById('teacherDashboard').classList.remove('hidden');
+            document.getElementById('studentDashboard').classList.add('hidden');
+        } else {
+            document.getElementById('studentDashboard').classList.remove('hidden');
+            document.getElementById('teacherDashboard').classList.add('hidden');
+        }
+    }
+    
+    function logout() {
+        currentUser = null;
+        document.getElementById('dashboard').classList.add('hidden');
+        document.getElementById('authSection').classList.remove('hidden');
+        showInitial();
+    }
+    
+    function showAddProject() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const fileData = {
+                        name: file.name,
+                        type: 'project',
+                        data: e.target.result
+                    };
+                    const studentIndex = users.students.findIndex(s => s.username === currentUser.username);
+                    users.students[studentIndex].files.push(fileData);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    updateFilesList();
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        input.click();
+    }
+    
+    function showAddHomework() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const fileData = {
+                        name: file.name,
+                        type: 'homework',
+                        data: e.target.result
+                    };
+                    const studentIndex = users.students.findIndex(s => s.username === currentUser.username);
+                    users.students[studentIndex].files.push(fileData);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    updateFilesList();
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        input.click();
+    }
+    
+    function updateFilesList() {
+        const filesDiv = document.getElementById('filesList');
+        filesDiv.innerHTML = '';
+        
+        const student = users.students.find(s => s.username === currentUser.username);
+        student.files.forEach((file, index) => {
+            const fileCard = document.createElement('div');
+            fileCard.className = 'file-card';
+            fileCard.innerHTML = `
+                <span>${file.name} (${file.type})</span>
+                <div>
+                    <button class="btn btn-primary" onclick="downloadFile(${index})">Download</button>
+                    <button class="btn btn-secondary" onclick="deleteFile(${index})">Delete</button>
+                </div>
+            `;
+            filesDiv.appendChild(fileCard);
+        });
+    }
+    
+    function downloadFile(index) {
+        const student = users.students.find(s => s.username === currentUser.username);
+        const file = student.files[index];
+        const link = document.createElement('a');
+        link.href = file.data;
+        link.download = file.name;
+        link.click();
+    }
+    
+    function deleteFile(index) {
+        const studentIndex = users.students.findIndex(s => s.username === currentUser.username);
+        users.students[studentIndex].files.splice(index, 1);
+        localStorage.setItem('users', JSON.stringify(users));
+        updateFilesList();
+    }
+    
+    function showStudentsList() {
+        const studentsList = document.getElementById('studentsList');
+        studentsList.innerHTML = '';
+        
+        users.students.forEach(student => {
+            const studentItem = document.createElement('div');
+            studentItem.className = 'student-item';
+            studentItem.innerHTML = `
+                <h3>${student.name}</h3>
+                <div class="files-list">
+                    ${student.files.map((file, index) => `
+                        <div class="file-card">
+                            <span>${file.name} (${file.type})</span>
+                            <button class="btn btn-primary" onclick="downloadStudentFile('${student.username}', ${index})">Download</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            studentsList.appendChild(studentItem);
+        });
+    }
+    
+    function downloadStudentFile(username, fileIndex) {
+        const student = users.students.find(s => s.username === username);
+        const file = student.files[fileIndex];
+        const link = document.createElement('a');
+        link.href = file.data;
+        link.download = file.name;
+        link.click();
+    }
+    </script>
+    </body></html>
